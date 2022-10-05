@@ -6,9 +6,9 @@ public class P3PROJECT
     public static boolean stat = true;
     public static String choose;
     public static String name, gender, address, agestatus, status, department, cod, tod;
-    public static int id, tid, age;
+    public static int id, tid, age, fid;
     private static final List<Patients> patientslist = new ArrayList<>();
-   
+    private static final Set<Integer> uniqueID = new HashSet<>();
     private static void NewPatient(Patients patients)
     {
         patientslist.add(patients);
@@ -20,16 +20,17 @@ public class P3PROJECT
         mainfunct();
     }
     
+    private static void NewUniqueID()
+    {
+        Random r = new Random();
+        uniqueID.add(r.nextInt(1000));
+    }
     private static void ExistingPatients()
     {
-            Set<Integer> uniqueID = new HashSet<>();
-            Random r = new Random();
             Patients patient1 = new Patients(176, "Andrew", "Male", "Indahag", 19, "Adult", "Dead", "Morgue", "Suicide", "12AM");
             patientslist.add(patient1);
-            uniqueID.add(176);
             Patients patient2 = new Patients(169, "Quia", "Female", "Cavite", 17, "Teen", "Normal", "Ward", "", "");
             patientslist.add(patient2);
-            uniqueID.add(169);
     }
     
     private static void mainfunct()
@@ -98,16 +99,12 @@ public class P3PROJECT
         //}
         //Random r = new Random();
         //Set<Integer> uniqueID = new HashSet<>();
-        Set<Integer> uniqueID = new HashSet<>();
-        Random r = new Random();
-        while (uniqueID.size()<1)
-        {
-            uniqueID.add(r.nextInt(1000));
-        }
+        NewUniqueID();
         for (Integer tid : uniqueID)
         {
-            id = tid;
+            fid = tid;
         }
+        id = fid;
         System.out.println("\nPatient ID: " + id);
         System.out.print("Enter Patient Name: ");
         name = input.next();
@@ -537,7 +534,6 @@ public class P3PROJECT
     }
     private static void RemovePatient()
     {
-        Set<Integer> uniqueID = new HashSet<>();
         System.out.println("\n=====================");
         System.out.println("Hospital Management System - Remove Patient");
         stat = true;
@@ -556,7 +552,6 @@ public class P3PROJECT
                         System.out.println("\n=====================");
                         System.out.println("\nSuccessfully Removed");
                         patientslist.remove(patients);
-                        uniqueID.remove(id);
                         stat = false;
                         mainfunct();
                     }
