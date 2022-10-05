@@ -16,11 +16,21 @@ public class P3PROJECT
     
     public static void main(String[] args) 
     {
-        Patients patient1 = new Patients(1, "Andrew", "Male", "Indahag", 19, "Adult", "Normal", "ICU", "", "");
-        patientslist.add(patient1);
+        ExistingPatients();
         mainfunct();
     }
     
+    private static void ExistingPatients()
+    {
+            Set<Integer> uniqueID = new HashSet<>();
+            Random r = new Random();
+            Patients patient1 = new Patients(176, "Andrew", "Male", "Indahag", 19, "Adult", "Dead", "Morgue", "Suicide", "12AM");
+            patientslist.add(patient1);
+            uniqueID.add(176);
+            Patients patient2 = new Patients(169, "Quia", "Female", "Cavite", 17, "Teen", "Normal", "Ward", "", "");
+            patientslist.add(patient2);
+            uniqueID.add(169);
+    }
     
     private static void mainfunct()
     {
@@ -86,8 +96,10 @@ public class P3PROJECT
                     //System.out.println("Numbers Only");
                 //}
         //}
-        Random r = new Random();
+        //Random r = new Random();
+        //Set<Integer> uniqueID = new HashSet<>();
         Set<Integer> uniqueID = new HashSet<>();
+        Random r = new Random();
         while (uniqueID.size()<1)
         {
             uniqueID.add(r.nextInt(1000));
@@ -199,6 +211,8 @@ public class P3PROJECT
         System.out.println("[1] ER");
         System.out.println("[2] OR");
         System.out.println("[3] ICU");
+        System.out.println("[4] WARD");
+        System.out.println("[5] MORGUE");
         stat = true;
         while(stat)
         {
@@ -219,9 +233,17 @@ public class P3PROJECT
             {
                 department = "ICU";
                 stat = false;
+            } else if(dchoose == 4)
+            {
+                department = "Ward";
+                stat = false;
+            }else if(dchoose == 5)
+            {
+                department = "Morgue";
+                stat = false;
             } else
             {
-                System.out.println("Invalid Selection");
+               System.out.println("Invalid Selection");   
             }
         } catch(NumberFormatException e)
             {
@@ -414,7 +436,15 @@ public class P3PROJECT
                                     } else if(nstatus == 3)
                                     {
                                         status = "Dead";
+                                        department = "Morgue";
+                                        System.out.print("Enter Patient Cause Of Death: ");
+                                        cod = input.next();
+                                        System.out.print("Enter Patient Time Of Death: ");
+                                        tod = input.next();
                                         patients.setstatus(status);
+                                        patients.setcod(cod);
+                                        patients.settod(tod);
+                                        patients.setdepartment(department);
                                         stat = false;
                                         mainfunct();
                                     }    
@@ -433,6 +463,8 @@ public class P3PROJECT
                                 System.out.println("[1] ER");
                                 System.out.println("[2] OR");
                                 System.out.println("[3] ICU");
+                                System.out.println("[4] WARD");
+                                System.out.println("[5] MORGUE");
                                 System.out.println("\n=====================");
                                 System.out.print("\nEnter Selection: ");
                                 String sndept = input.next();    
@@ -454,6 +486,18 @@ public class P3PROJECT
                                     } else if(ndept == 3)
                                     {
                                         department = "ICU";
+                                        patients.setdepartment(department);
+                                        stat = false;
+                                        mainfunct();
+                                    } else if(ndept == 4)
+                                    {
+                                        department = "Ward";
+                                        patients.setdepartment(department);
+                                        stat = false;
+                                        mainfunct();
+                                    } else if(ndept == 5)
+                                    {
+                                        department = "Morgue";
                                         patients.setdepartment(department);
                                         stat = false;
                                         mainfunct();
