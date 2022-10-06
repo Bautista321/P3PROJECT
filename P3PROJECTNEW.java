@@ -96,9 +96,6 @@ public class P3PROJECT
                 //{
                     //System.out.println("Numbers Only");
                 //}
-        //}
-        //Random r = new Random();
-        //Set<Integer> uniqueID = new HashSet<>();
         NewUniqueID();
         for (Integer tid : uniqueID)
         {
@@ -282,7 +279,8 @@ public class P3PROJECT
         System.out.println("\n=====================");
         System.out.println("Hospital Management System - Search Patient");
         stat = true;
-        while(stat)
+        int i = 0;
+        while(i < 3)
         {
             System.out.println("\n=====================");
             System.out.print("\nEnter Patient ID: ");
@@ -320,7 +318,12 @@ public class P3PROJECT
                 System.out.println("\n=====================");
                 System.out.println("\nPatient not found");
                 stat = true;
+                i++;
         }
+            System.out.println("\n=====================");
+            System.out.println("\nInvalid Attempt");
+            mainfunct();
+            
     }
     
     private static void EditPatientInfo()
@@ -328,7 +331,8 @@ public class P3PROJECT
         System.out.println("\n=====================");
         System.out.println("\nHospital Management System - Edit Patient Info");
         stat = true;
-        while(stat)
+        int i = 0;
+        while(i < 3)
         {
             System.out.println("\n=====================");
             System.out.print("\nEnter Patient ID: ");
@@ -530,14 +534,19 @@ public class P3PROJECT
                 System.out.println("\n=====================");
                 System.out.println("\nPatient not found");
                 stat = true;
+                i++;
         }
+            System.out.println("\n=====================");
+            System.out.println("\nInvalid Attempt");
+            mainfunct();
     }
     private static void RemovePatient()
     {
         System.out.println("\n=====================");
         System.out.println("Hospital Management System - Remove Patient");
         stat = true;
-        while(stat)
+        int i = 0;
+        while(i < 3)
         {
             System.out.println("\n=====================");
             System.out.print("\nEnter Patient ID: ");
@@ -563,6 +572,10 @@ public class P3PROJECT
                 System.out.println("\n=====================");
                 System.out.println("\nPatient not found");
                 stat = true;
+                i++;
         }
+            System.out.println("\n=====================");
+            System.out.println("\nInvalid Attempt");
+            mainfunct();
     }
 }
