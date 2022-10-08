@@ -301,9 +301,21 @@ public class P3PROJECT
     
     private static void SearchPatient(int id)
     {
-        for(Patients patients: patientslist)
-            {
-                if(patients.getid() == id)
+        //System.out.println("\n=====================");
+        //System.out.println("Hospital Management System - Search Patient");
+        //stat = true;
+        //int i = 0;
+        //while(i < 3)
+        //{
+            //System.out.println("\n=====================");
+            //System.out.print("\nEnter Patient ID: ");
+            //String sid = input.next();
+            //try
+            //{
+                //id = Integer.parseInt(sid);
+                for(Patients patients: patientslist)
+                {
+                    if(patients.getid() == id)
                     {
                         System.out.println("\n=====================");
                         System.out.println("\nPatient Found");
@@ -320,9 +332,23 @@ public class P3PROJECT
                             System.out.println("Patient Cause of Death: " + patients.getcod());
                             System.out.println("Patient Time of Death: " + patients.gettod());
                         }
+                        //stat = false;
+                        //mainfunct();
                     }
-            }
-                mainfunct();
+                }
+            //} catch(NumberFormatException e)
+            //{
+                //System.out.println("\nNumbers Only");
+            //}
+                //System.out.println("\n=====================");
+                //System.out.println("\nPatient not found");
+                //stat = true;
+                //i++;
+        //}
+            //System.out.println("\n=====================");
+            //System.out.println("\nInvalid Attempt");
+            mainfunct();
+            
     }
     
     private static void EditPatientInfo()
