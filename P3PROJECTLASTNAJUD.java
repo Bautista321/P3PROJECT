@@ -354,7 +354,7 @@ public class P3PROJECT
             //System.out.println("\n=====================");
             //System.out.println("\nInvalid Attempt");
             System.out.println("\n=====================");
-            System.out.println("\nDo you want to search again? ");
+            System.out.println("\nDo you want to search again?");
             System.out.println("[1] Yes");
             System.out.println("[2] No");
             System.out.println("====================="); 
