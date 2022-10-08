@@ -63,7 +63,7 @@ public class P3PROJECT
                     break;
                 case "3":
                     System.out.println("\n=====================");
-                    System.out.println("Hospital Management System - Search Patient");
+                    System.out.println("\nHospital Management System - Search Patient");
                     stat = true;
                     int i = 0;
                     while(i < 3)
@@ -74,8 +74,14 @@ public class P3PROJECT
                         try
                         {
                             id = Integer.parseInt(sid);
-                            SearchPatient(id);
-                            stat = false;
+                            for(Patients patients: patientslist)
+                            {
+                                if(patients.getid() == id)
+                                {
+                                    SearchPatient(id);
+                                    stat = false;
+                                }
+                            }
                         } catch(NumberFormatException e)
                         {
                             System.out.println("\nNumbers Only");
@@ -347,7 +353,56 @@ public class P3PROJECT
         //}
             //System.out.println("\n=====================");
             //System.out.println("\nInvalid Attempt");
-            mainfunct();
+            System.out.println("\n=====================");
+            System.out.println("\nDo you want to search again? ");
+            System.out.println("[1] Yes");
+            System.out.println("[2] No");
+            System.out.println("====================="); 
+            System.out.print("\nEnter Selection: ");
+            choose = input.next();
+            switch (choose) 
+            {
+                case "1":
+                    System.out.println("\n=====================");
+                    System.out.println("\nHospital Management System - Search Patient");
+                    stat = true;
+                    int i = 0;
+                    while(i < 3)
+                    {
+                        System.out.println("\n=====================");
+                        System.out.print("\nEnter Patient ID: ");
+                        String sid = input.next();
+                        try
+                        {
+                            id = Integer.parseInt(sid);
+                            for(Patients patients: patientslist)
+                            {
+                                if(patients.getid() == id)
+                                {
+                                    SearchPatient(id);
+                                    stat = false;
+                                }
+                            }
+                        } catch(NumberFormatException e)
+                        {
+                            System.out.println("\nNumbers Only");
+                        }
+                            System.out.println("\n=====================");
+                            System.out.println("\nPatient not found");
+                            stat = true;
+                            i++;
+                    }
+                        System.out.println("\n=====================");
+                        System.out.println("\nInvalid Attempt");
+                        mainfunct();
+                        break;
+                case "2":
+                        mainfunct();
+                        break;
+                default:
+                        System.out.println("Invalid Selection");
+                        break;
+            }
             
     }
     
