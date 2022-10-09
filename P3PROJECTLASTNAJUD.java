@@ -30,8 +30,6 @@ public class P3PROJECT
     {
             Patients patient1 = new Patients(176, "Andrew", "Male", "Indahag", 19, "Adult", "Dead", "Morgue", "Suicide", "12AM");
             patientslist.add(patient1);
-            Patients patient2 = new Patients(176, "Quia", "Female", "Cavite", 17, "Teen", "Normal", "Ward", "", "");
-            patientslist.add(patient2);
     }
     
     private static void mainfunct()
@@ -104,7 +102,9 @@ public class P3PROJECT
                     stat = false;
                     break;
                 default:
-                    System.out.println("Invalid Selection");
+                    System.out.println("\n=====================");
+                    System.out.println("\nInvalid Selection");
+                    System.out.println("\n=====================");
                     stat = true;
                     break;
             }
@@ -277,6 +277,7 @@ public class P3PROJECT
         }
         Patients patients = new Patients(id, name, gender, address, age, agestatus, status ,department, cod,  tod);
         NewPatient(patients);
+        System.out.println("\n=====================");
         System.out.println("\nSuccessfully Added");
         mainfunct();
     }
@@ -354,7 +355,7 @@ public class P3PROJECT
             //System.out.println("\n=====================");
             //System.out.println("\nInvalid Attempt");
             System.out.println("\n=====================");
-            System.out.println("\nDo you want to search again?");
+            System.out.println("Do you want to search again?");
             System.out.println("[1] Yes");
             System.out.println("[2] No");
             System.out.println("====================="); 
@@ -400,7 +401,9 @@ public class P3PROJECT
                         mainfunct();
                         break;
                 default:
-                        System.out.println("Invalid Selection");
+                        System.out.println("\n=====================");
+                        System.out.println("\nInvalid Selection");
+                        System.out.println("\n=====================");
                         break;
             }
             
@@ -440,14 +443,15 @@ public class P3PROJECT
                         }
                         System.out.println("\n=====================");
                         System.out.println("\nChange Information");
+                        System.out.println("\n=====================");
                         System.out.println("[1] Patient Age");
                         System.out.println("[2] Patient Status");
                         System.out.println("[3] Patient Department"); 
                         System.out.println("[4] Patient Address");
+                        System.out.println("=====================");
                         stat = true;
                         while(stat)
                         {
-                            System.out.println("\n=====================");
                             System.out.print("\nEnter Selection: ");
                             String sichoose = input.next();
                         try
@@ -479,6 +483,7 @@ public class P3PROJECT
                                         }
                                     patients.setage(age);
                                     patients.setagestatus(agestatus);
+                                    System.out.println("\nSuccessfully Changed");
                                     stat = false;
                                     mainfunct();
                                 } catch(NumberFormatException e)
@@ -492,11 +497,11 @@ public class P3PROJECT
                                 while(stat)
                                 {
                                     System.out.println("\n=====================");
-                                    System.out.println("\nNew Patient Status");
+                                    System.out.println("New Patient Status");
                                     System.out.println("[1] Normal");
                                     System.out.println("[2] Critical");
                                     System.out.println("[3] Dead");
-                                    System.out.println("\n=====================");
+                                    System.out.println("=====================");
                                     System.out.print("\nEnter Selection: ");
                                     String snstatus = input.next();
                                 try
@@ -506,12 +511,14 @@ public class P3PROJECT
                                     {
                                         status = "Normal";
                                         patients.setstatus(status);
+                                        System.out.println("\nSuccessfully Changed");
                                         stat = false;
                                         mainfunct();
                                     } else if(nstatus == 2)
                                     {
                                         status = "Critical";
                                         patients.setstatus(status);
+                                        System.out.println("\nSuccessfully Changed");
                                         stat = false;
                                         mainfunct();
                                     } else if(nstatus == 3)
@@ -526,6 +533,7 @@ public class P3PROJECT
                                         patients.setcod(cod);
                                         patients.settod(tod);
                                         patients.setdepartment(department);
+                                        System.out.println("\nSuccessfully Changed");
                                         stat = false;
                                         mainfunct();
                                     }    
@@ -540,13 +548,13 @@ public class P3PROJECT
                             while(stat)
                             {
                                 System.out.println("\n=====================");
-                                System.out.println("\nNew Patient Department");
+                                System.out.println("New Patient Department");
                                 System.out.println("[1] ER");
                                 System.out.println("[2] OR");
                                 System.out.println("[3] ICU");
                                 System.out.println("[4] WARD");
                                 System.out.println("[5] MORGUE");
-                                System.out.println("\n=====================");
+                                System.out.println("=====================");
                                 System.out.print("\nEnter Selection: ");
                                 String sndept = input.next();    
                                 try
@@ -556,30 +564,35 @@ public class P3PROJECT
                                     {
                                         department = "ER";
                                         patients.setdepartment(department);
+                                        System.out.println("\nSuccessfully Changed");
                                         stat = false;
                                         mainfunct();
                                     } else if(ndept == 2)
                                     {
                                         department = "OR";
                                         patients.setdepartment(department);
+                                        System.out.println("\nSuccessfully Changed");
                                         stat = false;
                                         mainfunct();
                                     } else if(ndept == 3)
                                     {
                                         department = "ICU";
                                         patients.setdepartment(department);
+                                        System.out.println("\nSuccessfully Changed");
                                         stat = false;
                                         mainfunct();
                                     } else if(ndept == 4)
                                     {
                                         department = "Ward";
                                         patients.setdepartment(department);
+                                        System.out.println("\nSuccessfully Changed");
                                         stat = false;
                                         mainfunct();
                                     } else if(ndept == 5)
                                     {
                                         department = "Morgue";
                                         patients.setdepartment(department);
+                                        System.out.println("\nSuccessfully Changed");
                                         stat = false;
                                         mainfunct();
                                     }
@@ -594,11 +607,14 @@ public class P3PROJECT
                             System.out.print("\nEnter New Patient Address: ");
                             String naddress = input.next();
                             patients.setaddress(naddress);
+                            System.out.println("\nSuccessfully Changed");
                             stat = false;
                             mainfunct();
                         } else
                         {
-                            System.out.println("Invalid Selection");
+                             System.out.println("\n=====================");
+                             System.out.println("\nInvalid Selection");
+                             System.out.println("\n=====================");
                         }
                     } catch(NumberFormatException e)
                     {
@@ -623,7 +639,7 @@ public class P3PROJECT
     private static void RemovePatient()
     {
         System.out.println("\n=====================");
-        System.out.println("Hospital Management System - Remove Patient");
+        System.out.println("\nHospital Management System - Remove Patient");
         stat = true;
         int i = 0;
         while(i < 3)
@@ -639,6 +655,7 @@ public class P3PROJECT
                     if(patients.getid() == id)
                     {
                         System.out.println("\n=====================");
+                        System.out.println("\nPatient Name: " + patients.getname());
                         System.out.println("\nSuccessfully Removed");
                         patientslist.remove(patients);
                         stat = false;
