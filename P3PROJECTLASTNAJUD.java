@@ -9,7 +9,7 @@ public class P3PROJECT
     public static int id, tid, age, fid;
     private static final Collection<Patients> patientslist = new ArrayList<>();
     private static final Set<Integer> uniqueID = new HashSet<>();
-    private static final Set<Patients> duplicates = new HashSet<>();
+
     private static void NewPatient(Patients patients)
     {
         patientslist.add(patients);
