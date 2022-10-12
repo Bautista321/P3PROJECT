@@ -4,7 +4,7 @@ public class P3PROJECT
 {
     public static Scanner input = new Scanner(System.in).useDelimiter("\n");
     public static boolean stat = true;
-    public static String choose, username, password;
+    public static String choose;
     public static String name, gender, address, agestatus, status, department, cod, tod;
     public static int id, age;
     private static final List<Patients> patientslist = new ArrayList<>();
