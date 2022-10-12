@@ -4,13 +4,13 @@ public class P3PROJECT
 {
     public static Scanner input = new Scanner(System.in).useDelimiter("\n");
     public static boolean stat = true;
-    public static String choose;
+    public static String choose, username, password;
     public static String name, gender, address, agestatus, status, department, cod, tod;
-    public static int id, tid, age, fid;
-    private static final Collection<Patients> patientslist = new ArrayList<>();
-    private static final Set<Integer> uniqueID = new HashSet<>();
+    public static int id, age;
+    private static final List<Patients> patientslist = new ArrayList<>();
+    private static final Set<UniqueID> uniqueID = new HashSet<>();
 
-    private static void NewPatient(Patients patients)
+    private static void NewPatient(Patients patients) 
     {
         patientslist.add(patients);
     }
@@ -20,20 +20,32 @@ public class P3PROJECT
         ExistingPatients();
         mainfunct();
     }
-    
-    private static void NewUniqueID()
+
+    // AYAW NANI APILA OG TYPE 
+    //private static void GenerateUniqueID() 
+    //{
+       // Random r = new Random();
+        //tid = r.nextInt(1000);
+    //}
+
+    private static void AddNewUniqueID() 
     {
-        Random r = new Random();
-        uniqueID.add(r.nextInt(1000));
-    }
-    private static void ExistingPatients()
-    {
-            Patients patient1 = new Patients(176, "Andrew", "Male", "Indahag", 19, "Adult", "Dead", "Morgue", "Suicide", "12AM");
-            patientslist.add(patient1);
+        UniqueID fuid = new UniqueID(id);
+        uniqueID.add(fuid);
     }
     
-    private static void mainfunct()
-    {   
+    private static void ExistingPatients() 
+    {
+        //GenerateUniqueID();
+        Patients patient1 = new Patients(1, "Andrew", "Male", "Indahag", 19, "Adult", "Dead", "Morgue", "Suicide", "12AM");
+        patientslist.add(patient1);
+        UniqueID fuid = new UniqueID(1);
+        uniqueID.add(fuid);
+        //AddNewUniqueID();
+    }
+
+    private static void mainfunct() 
+    {
         System.out.println("\n=====================");
         System.out.println("\nHospital Management System - Home Menu");
         System.out.println("\n=====================");
@@ -42,15 +54,14 @@ public class P3PROJECT
         System.out.println("[3] Search Patient");
         System.out.println("[4] Edit Patient Information");
         System.out.println("[5] Remove Patient");
-        System.out.println("Select from 1-4");
+        System.out.println("[6] Exit");
+        System.out.println("Select from 1-6");
         System.out.println("=====================");
         stat = true;
-        while (stat)
-        {
+        while (stat) {
             System.out.print("\nEnter Selection: ");
             choose = input.next();
-            switch (choose) 
-            {
+            switch (choose) {
                 case "1":
                     AddNewPatients();
                     stat = false;
@@ -62,36 +73,28 @@ public class P3PROJECT
                 case "3":
                     System.out.println("\n=====================");
                     System.out.println("\nHospital Management System - Search Patient");
-                    stat = true;
                     int i = 0;
-                    while(i < 3)
-                    {
+                    while (i < 3) {
                         System.out.println("\n=====================");
                         System.out.print("\nEnter Patient ID: ");
                         String sid = input.next();
-                        try
-                        {
+                        try {
                             id = Integer.parseInt(sid);
-                            for(Patients patients: patientslist)
-                            {
-                                if(patients.getid() == id)
-                                {
+                            for (Patients patients : patientslist) {
+                                if (patients.getid() == id) {
                                     SearchPatient(id);
-                                    stat = false;
                                 }
                             }
-                        } catch(NumberFormatException e)
-                        {
+                        } catch (NumberFormatException e) {
                             System.out.println("\nNumbers Only");
                         }
-                            System.out.println("\n=====================");
-                            System.out.println("\nPatient not found");
-                            stat = true;
-                            i++;
-                    }
                         System.out.println("\n=====================");
-                        System.out.println("\nInvalid Attempt");
-                        mainfunct();
+                        System.out.println("\nPatient not found");
+                        i++;
+                    }
+                    System.out.println("\n=====================");
+                    System.out.println("\nInvalid Attempt");
+                    mainfunct();
                     break;
                 case "4":
                     EditPatientInfo();
@@ -100,6 +103,9 @@ public class P3PROJECT
                 case "5":
                     RemovePatient();
                     stat = false;
+                    break;
+                case "6":
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("\n=====================");
@@ -110,29 +116,35 @@ public class P3PROJECT
             }
         }
     }
-    private static void AddNewPatients()
+
+    private static void AddNewPatients() 
     {
         System.out.println("\n=====================");
         System.out.println("\nHospital Management System - Add Patient");
-        //stat = true;
-        //while(stat)
-        //{
-            //System.out.print("\nEnter Patient ID: ");
-            //String sid = input.next();
-            //try 
-            //{
-                //id = Integer.parseInt(sid);
-                //stat = false;
-            //} catch(NumberFormatException e)
-                //{
-                    //System.out.println("Numbers Only");
-                //}
-        NewUniqueID();
-        for (Integer tid : uniqueID)
+        System.out.println("\n=====================");
+        stat = true;
+        while(stat)
         {
-            fid = tid;
+            System.out.print("\nEnter Patient ID: ");
+            String sid = input.next();
+            try 
+            {
+                id = Integer.parseInt(sid);
+                for(UniqueID cuid: uniqueID)
+                {
+                    if(cuid.getuid() == id)
+                    {
+                        System.out.println("ID Taken");
+                        AddNewPatients();
+                    }
+                }
+                    stat = false;
+            } catch(NumberFormatException e)
+                {
+                    System.out.println("Numbers Only");
+                    stat = true;
+                }
         }
-        id = fid;
         System.out.println("\nPatient ID: " + id);
         System.out.print("Enter Patient Name: ");
         name = input.next();
@@ -140,95 +152,74 @@ public class P3PROJECT
         System.out.println("[1] Male");
         System.out.println("[2] Female");
         stat = true;
-        while(stat)
-        {
-        System.out.print("Enter Selection: ");
-        String sgchoose = input.next();
-        try
-        {
-            int gchoose = Integer.parseInt(sgchoose);
-            if(gchoose == 1)
-            {
-                gender = "Male";
-                stat = false;
-            } else if(gchoose == 2)
-            {
-                gender = "Female";
-                stat = false;
-            } else
-            {
-                System.out.println("Invalid Selection");
-            }
-        } catch(NumberFormatException e)
-            {
+        while (stat) {
+            System.out.print("Enter Selection: ");
+            String sgchoose = input.next();
+            try {
+                int gchoose = Integer.parseInt(sgchoose);
+                if (gchoose == 1) {
+                    gender = "Male";
+                    stat = false;
+                } else if (gchoose == 2) {
+                    gender = "Female";
+                    stat = false;
+                } else {
+                    System.out.println("Invalid Selection");
+                }
+            } catch (NumberFormatException e) {
                 System.out.println("Numbers Only");
             }
         }
-        
         System.out.print("Enter Patient Address: ");
         address = input.next();
         stat = true;
-        while(stat)
-        {
+        while (stat) {
             System.out.print("Enter Patient Age: ");
             String sage = input.next();
-            try 
-            {
+            try {
                 age = Integer.parseInt(sage);
-                if(age >= 0 && age <= 15)
-                {
+                if (age >= 0 && age <= 15) {
                     agestatus = "Child";
-                } else if(age >= 16 && age <= 17)
-                {
+                } else if (age >= 16 && age <= 17) {
                     agestatus = "Teen";
-                } else if(age >= 18 && age <= 59)
-                {
+                } else if (age >= 18 && age <= 59) {
                     agestatus = "Adult";
-                } else if(age >= 60 && age <= 100)
-                {
+                } else if (age >= 60 && age <= 100) {
                     agestatus = "Senior";
                 }
                 stat = false;
-            } catch(NumberFormatException e)
-                {
-                    System.out.println("Numbers Only");
-                }
+            } catch (NumberFormatException e) {
+                System.out.println("Numbers Only");
+            }
         }
         System.out.println("Select Patient Status");
         System.out.println("[1] Normal");
         System.out.println("[2] Critical");
         System.out.println("[3] Dead");
         stat = true;
-        while(stat)
-        {
-        System.out.print("Enter Selection: ");
-        String sschoose = input.next();
-        try
-        {
-            int schoose = Integer.parseInt(sschoose);
-            if(schoose == 1)
-            {
-                status = "Normal";
-                stat = false;
-            } else if(schoose == 2)
-            {
-                status = "Critical";
-                stat = false;
-            } else if(schoose == 3)
-            {
-                        
-                System.out.print("Enter Patient Cause Of Death: ");
-                cod = input.next();
-                System.out.print("Enter Patient Time Of Death: ");
-                tod = input.next();
-                status = "Dead";
-                stat = false;
-            } else
-            {
-                System.out.println("Invalid Selection");
-            }
-        } catch(NumberFormatException e)
-            {
+        while (stat) {
+            System.out.print("Enter Selection: ");
+            String sschoose = input.next();
+            try {
+                int schoose = Integer.parseInt(sschoose);
+                if (schoose == 1) {
+                    status = "Normal";
+                    stat = false;
+                } else if (schoose == 2) {
+                    status = "Critical";
+                    stat = false;
+                } else if (schoose == 3) {
+
+                    System.out.print("Enter Patient Cause Of Death: ");
+                    cod = input.next();
+                    System.out.print("Enter Patient Time Of Death: ");
+                    tod = input.next();
+                    status = "Dead";
+                    stat = false;
+                } else {
+                    System.out.println("Invalid Selection");
+                }
+            } catch (NumberFormatException e) {
                 System.out.println("Numbers Only");
             }
         }
@@ -239,55 +230,47 @@ public class P3PROJECT
         System.out.println("[4] WARD");
         System.out.println("[5] MORGUE");
         stat = true;
-        while(stat)
-        {
-        System.out.print("Enter Selection: ");
-        String sdchoose = input.next();
-        try
-        {
-            int dchoose = Integer.parseInt(sdchoose);
-            if(dchoose == 1)
-            {
-                department = "ER";
-                stat = false;
-            } else if(dchoose == 2)
-            {
-                department = "OR";
-                stat = false;
-            } else if(dchoose == 3)
-            {
-                department = "ICU";
-                stat = false;
-            } else if(dchoose == 4)
-            {
-                department = "Ward";
-                stat = false;
-            }else if(dchoose == 5)
-            {
-                department = "Morgue";
-                stat = false;
-            } else
-            {
-               System.out.println("Invalid Selection");   
-            }
-        } catch(NumberFormatException e)
-            {
+        while (stat) {
+            System.out.print("Enter Selection: ");
+            String sdchoose = input.next();
+            try {
+                int dchoose = Integer.parseInt(sdchoose);
+                if (dchoose == 1) {
+                    department = "ER";
+                    stat = false;
+                } else if (dchoose == 2) {
+                    department = "OR";
+                    stat = false;
+                } else if (dchoose == 3) {
+                    department = "ICU";
+                    stat = false;
+                } else if (dchoose == 4) {
+                    department = "Ward";
+                    stat = false;
+                } else if (dchoose == 5) {
+                    department = "Morgue";
+                    stat = false;
+                } else {
+                    System.out.println("Invalid Selection");
+                }
+            } catch (NumberFormatException e) {
                 System.out.println("Numbers Only");
             }
         }
-        Patients patients = new Patients(id, name, gender, address, age, agestatus, status ,department, cod,  tod);
+        
+        Patients patients = new Patients(id, name, gender, address, age, agestatus, status, department, cod, tod);
         NewPatient(patients);
+        AddNewUniqueID();
         System.out.println("\n=====================");
         System.out.println("\nSuccessfully Added");
         mainfunct();
     }
-    
-    private static void ShowAllPatient()
+
+    private static void ShowAllPatient() 
     {
         System.out.println("\n=====================");
         System.out.println("\nHospital Management System - List of Patients");
-        for(Patients patients: patientslist)
-        {   
+        for (Patients patients : patientslist) {
             System.out.println("\n=====================");
             System.out.println("\nPatient ID: " + patients.getid());
             System.out.println("Patient Name: " + patients.getname());
@@ -297,136 +280,96 @@ public class P3PROJECT
             System.out.println("Patient Age Status: " + patients.getagestatus());
             System.out.println("Patient Status: " + patients.getstatus());
             System.out.println("Patient Department: " + patients.getdepartment());
-            if(patients.getstatus().equals("Dead"))
-            {
+            if (patients.getstatus().equals("Dead")) {
                 System.out.println("Patient Cause of Death: " + patients.getcod());
                 System.out.println("Patient Time of Death: " + patients.gettod());
             }
         }
         mainfunct();
     }
-    
-    private static void SearchPatient(int id)
+
+    private static void SearchPatient(int id) 
     {
-        //System.out.println("\n=====================");
-        //System.out.println("Hospital Management System - Search Patient");
-        //stat = true;
-        //int i = 0;
-        //while(i < 3)
-        //{
-            //System.out.println("\n=====================");
-            //System.out.print("\nEnter Patient ID: ");
-            //String sid = input.next();
-            //try
-            //{
-                //id = Integer.parseInt(sid);
-                for(Patients patients: patientslist)
-                {
-                    if(patients.getid() == id)
-                    {
-                        System.out.println("\n=====================");
-                        System.out.println("\nPatient Found");
-                        System.out.println("\nPatient ID: " + patients.getid());
-                        System.out.println("Patient Name: " + patients.getname());
-                        System.out.println("Patient Gender: " + patients.getgender());
-                        System.out.println("Patient Address: " + patients.getaddress());
-                        System.out.println("Patient Age: " + patients.getage());
-                        System.out.println("Patient Age Status: " + patients.getagestatus());
-                        System.out.println("Patient Status: " + patients.getstatus());
-                        System.out.println("Patient Department: " + patients.getdepartment());
-                        if(patients.getstatus().equals("Dead"))
-                        {
-                            System.out.println("Patient Cause of Death: " + patients.getcod());
-                            System.out.println("Patient Time of Death: " + patients.gettod());
-                        }
-                        //stat = false;
-                        //mainfunct();
-                    }
+        for (Patients patients : patientslist) {
+            if (patients.getid() == id) {
+                System.out.println("\n=====================");
+                System.out.println("\nPatient Found");
+                System.out.println("\nPatient ID: " + patients.getid());
+                System.out.println("Patient Name: " + patients.getname());
+                System.out.println("Patient Gender: " + patients.getgender());
+                System.out.println("Patient Address: " + patients.getaddress());
+                System.out.println("Patient Age: " + patients.getage());
+                System.out.println("Patient Age Status: " + patients.getagestatus());
+                System.out.println("Patient Status: " + patients.getstatus());
+                System.out.println("Patient Department: " + patients.getdepartment());
+                if (patients.getstatus().equals("Dead")) {
+                    System.out.println("Patient Cause of Death: " + patients.getcod());
+                    System.out.println("Patient Time of Death: " + patients.gettod());
                 }
-            //} catch(NumberFormatException e)
-            //{
-                //System.out.println("\nNumbers Only");
-            //}
-                //System.out.println("\n=====================");
-                //System.out.println("\nPatient not found");
-                //stat = true;
-                //i++;
-        //}
-            //System.out.println("\n=====================");
-            //System.out.println("\nInvalid Attempt");
-            System.out.println("\n=====================");
-            System.out.println("Do you want to search again?");
-            System.out.println("[1] Yes");
-            System.out.println("[2] No");
-            System.out.println("====================="); 
-            System.out.print("\nEnter Selection: ");
-            choose = input.next();
-            switch (choose) 
-            {
-                case "1":
-                    System.out.println("\n=====================");
-                    System.out.println("\nHospital Management System - Search Patient");
-                    stat = true;
-                    int i = 0;
-                    while(i < 3)
-                    {
-                        System.out.println("\n=====================");
-                        System.out.print("\nEnter Patient ID: ");
-                        String sid = input.next();
-                        try
-                        {
-                            id = Integer.parseInt(sid);
-                            for(Patients patients: patientslist)
-                            {
-                                if(patients.getid() == id)
-                                {
-                                    SearchPatient(id);
-                                    stat = false;
-                                }
-                            }
-                        } catch(NumberFormatException e)
-                        {
-                            System.out.println("\nNumbers Only");
-                        }
-                            System.out.println("\n=====================");
-                            System.out.println("\nPatient not found");
-                            stat = true;
-                            i++;
-                    }
-                        System.out.println("\n=====================");
-                        System.out.println("\nInvalid Attempt");
-                        mainfunct();
-                        break;
-                case "2":
-                        mainfunct();
-                        break;
-                default:
-                        System.out.println("\n=====================");
-                        System.out.println("\nInvalid Selection");
-                        System.out.println("\n=====================");
-                        break;
             }
-            
+        }
+        System.out.println("\n=====================");
+        System.out.println("Do you want to search again?");
+        System.out.println("[1] Yes");
+        System.out.println("[2] No");
+        System.out.println("=====================");
+        System.out.print("\nEnter Selection: ");
+        choose = input.next();
+        switch (choose) {
+            case "1":
+                System.out.println("\n=====================");
+                System.out.println("\nHospital Management System - Search Patient");
+                stat = true;
+                int i = 0;
+                while (i < 3) {
+                    System.out.println("\n=====================");
+                    System.out.print("\nEnter Patient ID: ");
+                    String sid = input.next();
+                    try {
+                        id = Integer.parseInt(sid);
+                        for (Patients patients : patientslist) {
+                            if (patients.getid() == id) {
+                                SearchPatient(id);
+                                stat = false;
+                            }
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("\nNumbers Only");
+                    }
+                    System.out.println("\n=====================");
+                    System.out.println("\nPatient not found");
+                    stat = true;
+                    i++;
+                }
+                System.out.println("\n=====================");
+                System.out.println("\nInvalid Attempt");
+                mainfunct();
+                break;
+            case "2":
+                mainfunct();
+                break;
+            default:
+                System.out.println("\n=====================");
+                System.out.println("\nInvalid Selection");
+                System.out.println("\n=====================");
+                break;
+        }
+
     }
-    
-    private static void EditPatientInfo()
+
+    private static void EditPatientInfo() 
     {
         System.out.println("\n=====================");
         System.out.println("\nHospital Management System - Edit Patient Info");
-        stat = true;
         int i = 0;
-        while(i < 3)
-        {
+        while (i < 3) {
             System.out.println("\n=====================");
             System.out.print("\nEnter Patient ID: ");
             String sid = input.next();
-            try 
-            {
+            try {
                 id = Integer.parseInt(sid);
-                for(Patients patients: patientslist)
-                {
-                    if(patients.getid() == id)
-                    {
+                for (Patients patients : patientslist) {
+                    if (patients.getid() == id) {
                         System.out.println("\n=====================");
                         System.out.println("\nPatient ID: " + patients.getid());
                         System.out.println("Patient Name: " + patients.getname());
@@ -436,8 +379,7 @@ public class P3PROJECT
                         System.out.println("Patient Age Status: " + patients.getagestatus());
                         System.out.println("Patient Status: " + patients.getstatus());
                         System.out.println("Patient Department: " + patients.getdepartment());
-                        if(patients.getstatus().equals("Dead"))
-                        {
+                        if (patients.getstatus().equals("Dead")) {
                             System.out.println("Patient Cause of Death: " + patients.getcod());
                             System.out.println("Patient Time of Death: " + patients.gettod());
                         }
@@ -446,233 +388,199 @@ public class P3PROJECT
                         System.out.println("\n=====================");
                         System.out.println("[1] Patient Age");
                         System.out.println("[2] Patient Status");
-                        System.out.println("[3] Patient Department"); 
+                        System.out.println("[3] Patient Department");
                         System.out.println("[4] Patient Address");
                         System.out.println("=====================");
                         stat = true;
-                        while(stat)
-                        {
+                        while (stat) {
                             System.out.print("\nEnter Selection: ");
                             String sichoose = input.next();
-                        try
-                        {
-                            int cichoose = Integer.parseInt(sichoose);
-                            if(cichoose == 1)
-                            {
-                                stat = true;
-                                while(stat)
-                                {
-                                    System.out.println("\n=====================");
-                                    System.out.print("\nEnter New Patient Age: ");
-                                    String cnage = input.next();
-                                try
-                                {
-                                    age = Integer.parseInt(cnage);
-                                    if(age >= 0 && age <= 15)
-                                        {
-                                            agestatus = "Child";
-                                        } else if(age >= 16 && age <= 17)
-                                        {
-                                            agestatus = "Teen";
-                                        } else if(age >= 18 && age <= 59)
-                                        {
-                                            agestatus = "Adult";
-                                        } else if(age >= 60 && age <= 100)
-                                        {
-                                        agestatus = "Senior";
+                            try {
+                                int cichoose = Integer.parseInt(sichoose);
+                                if (cichoose == 1) {
+                                    stat = true;
+                                    while (stat) {
+                                        System.out.println("\n=====================");
+                                        System.out.print("\nEnter New Patient Age: ");
+                                        String cnage = input.next();
+                                        try {
+                                            age = Integer.parseInt(cnage);
+                                            if (age >= 0 && age <= 15) {
+                                                agestatus = "Child";
+                                            } else if (age >= 16 && age <= 17) {
+                                                agestatus = "Teen";
+                                            } else if (age >= 18 && age <= 59) {
+                                                agestatus = "Adult";
+                                            } else if (age >= 60 && age <= 100) {
+                                                agestatus = "Senior";
+                                            }
+                                            patients.setage(age);
+                                            patients.setagestatus(agestatus);
+                                            System.out.println("\nSuccessfully Changed");
+                                            stat = false;
+                                            mainfunct();
+                                        } catch (NumberFormatException e) {
+                                            System.out.println("Numbers Only");
                                         }
-                                    patients.setage(age);
-                                    patients.setagestatus(agestatus);
+                                    }
+                                } else if (cichoose == 2) {
+                                    stat = true;
+                                    while (stat) {
+                                        System.out.println("\n=====================");
+                                        System.out.println("New Patient Status");
+                                        System.out.println("[1] Normal");
+                                        System.out.println("[2] Critical");
+                                        System.out.println("[3] Dead");
+                                        System.out.println("=====================");
+                                        System.out.print("\nEnter Selection: ");
+                                        String snstatus = input.next();
+                                        try {
+                                            int nstatus = Integer.parseInt(snstatus);
+                                            if (nstatus == 1) {
+                                                status = "Normal";
+                                                patients.setstatus(status);
+                                                System.out.println("\nSuccessfully Changed");
+                                                stat = false;
+                                                mainfunct();
+                                            } else if (nstatus == 2) {
+                                                status = "Critical";
+                                                patients.setstatus(status);
+                                                System.out.println("\nSuccessfully Changed");
+                                                stat = false;
+                                                mainfunct();
+                                            } else if (nstatus == 3) {
+                                                status = "Dead";
+                                                department = "Morgue";
+                                                System.out.print("Enter Patient Cause Of Death: ");
+                                                cod = input.next();
+                                                System.out.print("Enter Patient Time Of Death: ");
+                                                tod = input.next();
+                                                patients.setstatus(status);
+                                                patients.setcod(cod);
+                                                patients.settod(tod);
+                                                patients.setdepartment(department);
+                                                System.out.println("\nSuccessfully Changed");
+                                                stat = false;
+                                                mainfunct();
+                                            }
+                                        } catch (NumberFormatException e) {
+                                            System.out.println("Numbers Only");
+                                        }
+                                    }
+                                } else if (cichoose == 3) {
+                                    stat = true;
+                                    while (stat) {
+                                        System.out.println("\n=====================");
+                                        System.out.println("New Patient Department");
+                                        System.out.println("[1] ER");
+                                        System.out.println("[2] OR");
+                                        System.out.println("[3] ICU");
+                                        System.out.println("[4] WARD");
+                                        System.out.println("[5] MORGUE");
+                                        System.out.println("=====================");
+                                        System.out.print("\nEnter Selection: ");
+                                        String sndept = input.next();
+                                        try {
+                                            int ndept = Integer.parseInt(sndept);
+                                            if (ndept == 1) {
+                                                department = "ER";
+                                                patients.setdepartment(department);
+                                                System.out.println("\nSuccessfully Changed");
+                                                stat = false;
+                                                mainfunct();
+                                            } else if (ndept == 2) {
+                                                department = "OR";
+                                                patients.setdepartment(department);
+                                                System.out.println("\nSuccessfully Changed");
+                                                stat = false;
+                                                mainfunct();
+                                            } else if (ndept == 3) {
+                                                department = "ICU";
+                                                patients.setdepartment(department);
+                                                System.out.println("\nSuccessfully Changed");
+                                                stat = false;
+                                                mainfunct();
+                                            } else if (ndept == 4) {
+                                                department = "Ward";
+                                                patients.setdepartment(department);
+                                                System.out.println("\nSuccessfully Changed");
+                                                stat = false;
+                                                mainfunct();
+                                            } else if (ndept == 5) {
+                                                department = "Morgue";
+                                                patients.setdepartment(department);
+                                                System.out.println("\nSuccessfully Changed");
+                                                stat = false;
+                                                mainfunct();
+                                            }
+                                        } catch (NumberFormatException e) {
+                                            System.out.println("Numbers Only");
+                                        }
+                                    }
+                                } else if (cichoose == 4) {
+                                    System.out.println("\n=====================");
+                                    System.out.print("\nEnter New Patient Address: ");
+                                    String naddress = input.next();
+                                    patients.setaddress(naddress);
                                     System.out.println("\nSuccessfully Changed");
                                     stat = false;
                                     mainfunct();
-                                } catch(NumberFormatException e)
-                                    {
-                                        System.out.println("Numbers Only");
-                                    }
-                                }
-                            } else if(cichoose == 2)
-                            {
-                                stat = true;
-                                while(stat)
-                                {
+                                } else {
                                     System.out.println("\n=====================");
-                                    System.out.println("New Patient Status");
-                                    System.out.println("[1] Normal");
-                                    System.out.println("[2] Critical");
-                                    System.out.println("[3] Dead");
-                                    System.out.println("=====================");
-                                    System.out.print("\nEnter Selection: ");
-                                    String snstatus = input.next();
-                                try
-                                {
-                                    int nstatus = Integer.parseInt(snstatus);
-                                    if(nstatus == 1)
-                                    {
-                                        status = "Normal";
-                                        patients.setstatus(status);
-                                        System.out.println("\nSuccessfully Changed");
-                                        stat = false;
-                                        mainfunct();
-                                    } else if(nstatus == 2)
-                                    {
-                                        status = "Critical";
-                                        patients.setstatus(status);
-                                        System.out.println("\nSuccessfully Changed");
-                                        stat = false;
-                                        mainfunct();
-                                    } else if(nstatus == 3)
-                                    {
-                                        status = "Dead";
-                                        department = "Morgue";
-                                        System.out.print("Enter Patient Cause Of Death: ");
-                                        cod = input.next();
-                                        System.out.print("Enter Patient Time Of Death: ");
-                                        tod = input.next();
-                                        patients.setstatus(status);
-                                        patients.setcod(cod);
-                                        patients.settod(tod);
-                                        patients.setdepartment(department);
-                                        System.out.println("\nSuccessfully Changed");
-                                        stat = false;
-                                        mainfunct();
-                                    }    
-                                } catch(NumberFormatException e)
-                                {
-                                    System.out.println("Numbers Only");
-                                }    
-                            }
-                        } else if(cichoose == 3)
-                        {
-                            stat = true;
-                            while(stat)
-                            {
-                                System.out.println("\n=====================");
-                                System.out.println("New Patient Department");
-                                System.out.println("[1] ER");
-                                System.out.println("[2] OR");
-                                System.out.println("[3] ICU");
-                                System.out.println("[4] WARD");
-                                System.out.println("[5] MORGUE");
-                                System.out.println("=====================");
-                                System.out.print("\nEnter Selection: ");
-                                String sndept = input.next();    
-                                try
-                                {
-                                    int ndept = Integer.parseInt(sndept);
-                                    if(ndept == 1)
-                                    {
-                                        department = "ER";
-                                        patients.setdepartment(department);
-                                        System.out.println("\nSuccessfully Changed");
-                                        stat = false;
-                                        mainfunct();
-                                    } else if(ndept == 2)
-                                    {
-                                        department = "OR";
-                                        patients.setdepartment(department);
-                                        System.out.println("\nSuccessfully Changed");
-                                        stat = false;
-                                        mainfunct();
-                                    } else if(ndept == 3)
-                                    {
-                                        department = "ICU";
-                                        patients.setdepartment(department);
-                                        System.out.println("\nSuccessfully Changed");
-                                        stat = false;
-                                        mainfunct();
-                                    } else if(ndept == 4)
-                                    {
-                                        department = "Ward";
-                                        patients.setdepartment(department);
-                                        System.out.println("\nSuccessfully Changed");
-                                        stat = false;
-                                        mainfunct();
-                                    } else if(ndept == 5)
-                                    {
-                                        department = "Morgue";
-                                        patients.setdepartment(department);
-                                        System.out.println("\nSuccessfully Changed");
-                                        stat = false;
-                                        mainfunct();
-                                    }
-                                } catch(NumberFormatException e)
-                                {
-                                    System.out.println("Numbers Only");
+                                    System.out.println("\nInvalid Selection");
+                                    System.out.println("\n=====================");
                                 }
+                            } catch (NumberFormatException e) {
+                                System.out.println("Numbers Only");
                             }
-                        } else if(cichoose == 4)
-                        {
-                            System.out.println("\n=====================");
-                            System.out.print("\nEnter New Patient Address: ");
-                            String naddress = input.next();
-                            patients.setaddress(naddress);
-                            System.out.println("\nSuccessfully Changed");
-                            stat = false;
-                            mainfunct();
-                        } else
-                        {
-                             System.out.println("\n=====================");
-                             System.out.println("\nInvalid Selection");
-                             System.out.println("\n=====================");
                         }
-                    } catch(NumberFormatException e)
-                    {
-                        System.out.println("Numbers Only");
                     }
                 }
+            } catch (NumberFormatException e) {
+                System.out.println("Numbers Only");
             }
-        }
-    } catch(NumberFormatException e)
-        {
-            System.out.println("Numbers Only");
-        }
-                System.out.println("\n=====================");
-                System.out.println("\nPatient not found");
-                stat = true;
-                i++;
-        }
             System.out.println("\n=====================");
-            System.out.println("\nInvalid Attempt");
-            mainfunct();
+            System.out.println("\nPatient not found");
+            i++;
+        }
+        System.out.println("\n=====================");
+        System.out.println("\nInvalid Attempt");
+        mainfunct();
     }
-    private static void RemovePatient()
+
+    private static void RemovePatient() 
     {
         System.out.println("\n=====================");
         System.out.println("\nHospital Management System - Remove Patient");
-        stat = true;
         int i = 0;
-        while(i < 3)
-        {
+        while (i < 3) {
             System.out.println("\n=====================");
             System.out.print("\nEnter Patient ID: ");
             String rid = input.next();
-            try
-            {
+            try {
                 id = Integer.parseInt(rid);
-                for(Patients patients: patientslist)
-                {
-                    if(patients.getid() == id)
-                    {
-                        System.out.println("\n=====================");
-                        System.out.println("\nPatient Name: " + patients.getname());
-                        System.out.println("\nSuccessfully Removed");
-                        patientslist.remove(patients);
-                        stat = false;
-                        mainfunct();
+                for (Patients patients : patientslist) {
+                    for (UniqueID fuid : uniqueID) {
+                        if (patients.getid() == id && fuid.getuid() == id) {
+                            System.out.println("\n=====================");
+                            System.out.println("\nPatient ID: " + fuid.getuid());
+                            System.out.println("Patient Name: " + patients.getname());
+                            System.out.println("\nSuccessfully Removed");
+                            patientslist.remove(patients);
+                            uniqueID.remove(fuid);
+                            mainfunct();
+                        }
                     }
                 }
-            } catch(NumberFormatException e)
-            {
+            } catch (NumberFormatException e) {
                 System.out.println("\nNumbers Only");
             }
-                System.out.println("\n=====================");
-                System.out.println("\nPatient not found");
-                stat = true;
-                i++;
-        }
             System.out.println("\n=====================");
-            System.out.println("\nInvalid Attempt");
-            mainfunct();
+            System.out.println("\nPatient not found");
+            i++;
+        }
+        System.out.println("\n=====================");
+        System.out.println("\nInvalid Attempt");
+        mainfunct();
     }
 }
