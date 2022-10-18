@@ -213,7 +213,7 @@ public class P3PROJECT
                     if(cuid.getuid() == id)
                     {
                         System.out.println("ID Taken");
-                        AddNewPatients();
+                        mainfunct();
                     }
                 }
                     stat = false;
@@ -414,9 +414,9 @@ public class P3PROJECT
                     } catch (NumberFormatException e) {
                         System.out.println("\nNumbers Only");
                     }
-                    System.out.println("\n=====================");
-                    System.out.println("\nPatient not found");
-                    stat = true;
+                    //System.out.println("\n=====================");
+                    //System.out.println("\nPatient not found");
+                    //stat = true;
                     i++;
                 }
                 System.out.println("\n=====================");
@@ -429,7 +429,7 @@ public class P3PROJECT
             default:
                 System.out.println("\n=====================");
                 System.out.println("\nInvalid Selection");
-                System.out.println("\n=====================");
+                SearchPatient(id);
                 break;
         }
 
